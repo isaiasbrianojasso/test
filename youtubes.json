@@ -2,57 +2,56 @@
     "kind": "youtube#channelListResponse",
     "etag": "\"XpPGQXPnxQJhLgs6enD_n8JR4Qk/gfJfiHwXpB0sSUADfwh3e495L9s\"",
     "pageInfo": {
-     "totalResults": 1,
-     "resultsPerPage": 5
+        "totalResults": 1,
+        "resultsPerPage": 5
     },
     "items": [
-     {
-      "kind": "youtube#channel",
-      "etag": "\"XpPGQXPnxQJhLgs6enD_n8JR4Qk/fvnCBTKu5cgveiPvfRRBNB_X1zs\"",
-      "id": "UCA6usga5ODIZjkEekkBs6Tg",
-      "snippet": {
-       "title": "EnriqueG",
-       "description": "",
-       "customUrl": "radicalneoevo",
-       "publishedAt": "2007-12-15T22:12:14.000Z",
-       "thumbnails": {
-        "default": {
-         "url": "https://yt3.ggpht.com/a-/AAuE7mB1cFexsZuWFdi9fAU1dlBvfOPjNuV1jlyOPA=s88-mo-c-c0xffffffff-rj-k-no",
-         "width": 88,
-         "height": 88
-        },
-        "medium": {
-         "url": "https://yt3.ggpht.com/a-/AAuE7mB1cFexsZuWFdi9fAU1dlBvfOPjNuV1jlyOPA=s240-mo-c-c0xffffffff-rj-k-no",
-         "width": 240,
-         "height": 240
-        },
-        "high": {
-         "url": "https://yt3.ggpht.com/a-/AAuE7mB1cFexsZuWFdi9fAU1dlBvfOPjNuV1jlyOPA=s800-mo-c-c0xffffffff-rj-k-no",
-         "width": 800,
-         "height": 800
+        {
+            "kind": "youtube#channel",
+            "etag": "\"XpPGQXPnxQJhLgs6enD_n8JR4Qk/fvnCBTKu5cgveiPvfRRBNB_X1zs\"",
+            "id": "UCA6usga5ODIZjkEekkBs6Tg",
+            "snippet": {
+                "title": "EnriqueG",
+                "description": "",
+                "customUrl": "radicalneoevo",
+                "publishedAt": "2007-12-15T22:12:14.000Z",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://yt3.ggpht.com/a-/AAuE7mB1cFexsZuWFdi9fAU1dlBvfOPjNuV1jlyOPA=s88-mo-c-c0xffffffff-rj-k-no",
+                        "width": 88,
+                        "height": 88
+                    },
+                    "medium": {
+                        "url": "https://yt3.ggpht.com/a-/AAuE7mB1cFexsZuWFdi9fAU1dlBvfOPjNuV1jlyOPA=s240-mo-c-c0xffffffff-rj-k-no",
+                        "width": 240,
+                        "height": 240
+                    },
+                    "high": {
+                        "url": "https://yt3.ggpht.com/a-/AAuE7mB1cFexsZuWFdi9fAU1dlBvfOPjNuV1jlyOPA=s800-mo-c-c0xffffffff-rj-k-no",
+                        "width": 800,
+                        "height": 800
+                    }
+                },
+                "localized": {
+                    "title": "EnriqueG",
+                    "description": ""
+                }
+            },
+            "contentDetails": {
+                "relatedPlaylists": {
+                    "favorites": "FLA6usga5ODIZjkEekkBs6Tg",
+                    "uploads": "UUA6usga5ODIZjkEekkBs6Tg",
+                    "watchHistory": "HL",
+                    "watchLater": "WL"
+                }
+            },
+            "statistics": {
+                "viewCount": "103",
+                "commentCount": "0",
+                "subscriberCount": "8",
+                "hiddenSubscriberCount": false,
+                "videoCount": "1"
+            }
         }
-       },
-       "localized": {
-        "title": "EnriqueG",
-        "description": ""
-       }
-      },
-      "contentDetails": {
-       "relatedPlaylists": {
-        "favorites": "FLA6usga5ODIZjkEekkBs6Tg",
-        "uploads": "UUA6usga5ODIZjkEekkBs6Tg",
-        "watchHistory": "HL",
-        "watchLater": "WL"
-       }
-      },
-      "statistics": {
-       "viewCount": "103",
-       "commentCount": "0",
-       "subscriberCount": "8",
-       "hiddenSubscriberCount": false,
-       "videoCount": "1"
-      }
-     }
     ]
-   }
-   
+}

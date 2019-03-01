@@ -24,7 +24,6 @@
             </button>
             <!--Add buttons to initiate auth sequence and sign out-->
             <div id="menu" class="collapse navbar-collapse">
-
                 <ul class="navbar-nav ml-auto">
                     <li class="navbar-item"><a class="nav-link text-white" href="">Home</a></li>
                 </ul>
@@ -36,20 +35,23 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col-2-md">
-                    <button class="btn btn-primary  offset-sm-3  form-control active" type="button"
-                        id="authorize-button" style="display: none;">Autorizar</button>
-                    <button class="btn btn-danger btn-sm offset-sm-3 form-control " type="button" id="signout-button"
-                        style="display: none;">Desconectarse</button>
-                    <div class="col-4-md">
-                        <img src="" id="img" alt="">
-                        <pre id="content"></pre>
-                        <ul id="lista-youtubes" name="lista-youtube" class="list-group">
-
+                <div class="col-4-md mt-5 border bg-dark rounded ">
+                    <div class="card-group rounded-5">
+                        <div class="card-img-top img-circle ml-5 mt-5">
+                        <div class="card-img" id="imagen"></div>
+                        <div class="card-body">
+                                <pre class="h2 card-title text-info" id="content"></pre>
+                                <button class="btn btn-primary form-control active" type="button"
+                                    id="authorize-button" style="display: none;">Autorizar</button>
+                                <button class="btn btn-danger form-control " type="button"
+                                    id="signout-button" style="display: none;">Desconectarse</button>
+                        </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
-                <script type="text/javascript">
+            <script type="text/javascript">
                 var CLIENT_ID = '414973337482-vbmp75623qbvdtps1tl4krqk1jak0afi.apps.googleusercontent.com';
                 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
                 var SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
@@ -97,9 +99,12 @@
                         'forUsername': 'radicalneoevo'
                     }).then(function (response) {
                         var channel = response.result.items[0];
-                        appendPre('This channel\'s ID is ' + channel.id + '. ' +
-                            'Its title is \'' + channel.snippet.title + ', ' +
-                            'and it has ' + channel.statistics.viewCount + ' views.');
+                        appendPre('Nombre : ' + channel.snippet.title + ' ' + 
+                            'Sobrenombre:\'' + channel.snippet.customUrl);
+
+                        document.getElementById("imagen").innerHTML += "<div style='width:100%;min-height:90px;'>"
+                            + "<img src='" + channel.snippet.thumbnails.default.url + "' style='border:none;float:left;margin-right:10px;'/></a>"
+                            + "</div>";
                     });
                 }
             </script>
@@ -118,12 +123,29 @@
         getyoutubes();
     });
 
+    //obtengo el JSON
+    function getJSONData(yourUrl) {
+        var Httpreq = new XMLHttpRequest();
+        try {
+            Httpreq.open("GET", yourUrl, false);
+            Httpreq.send(null);
+        } catch (ex) {
+            alert(ex.message);
+        }
+        return Httpreq.responseText;
+    }
+
+
+
     function getyoutubes() {
         $.get("http://localhost:3000/youtubes", function (data) {
             var img = "";
             $.each(data, function (index, data) {
                 //https://content.googleapis.com/youtube/v3/channels?forUsername=radicalneoevo&part=snippet%2CcontentDetails%2Cstatistics
-                //console.log(data);
+                console.log(data);
+
+
+
             });
 
         });
