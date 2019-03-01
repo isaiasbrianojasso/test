@@ -44,7 +44,7 @@
                     <div class="col-4-md">
                         <img src="" id="img" alt="">
                         <pre id="content"></pre>
-                        <ul id="lista-youtube" name="lista-youtube" class="list-group">
+                        <ul id="lista-youtubes" name="lista-youtube" class="list-group">
 
                     </div>
                 </div>
@@ -160,38 +160,37 @@
 </body>
 <script>
     $(document).ready(function () {
-        getyoutubes();    
+        getyoutubes();
     });
 
-    function getyoutubes(){
+    function getyoutubes() {
         //LLamada GET para obtener los youtube
         //Se muestra resultado con una lista en HTML
         //Se utiliza un ciclo for y se genera el codigo HTML
         //Usando Jquery se coloca el HTML en la lista.
-        $.get("http://localhost:3000/youtubes", function(data){
-            var listHTML = "";
+        $.get("http://localhost:3000/youtubes", function (data) {
+            var img = "";
             console.log(data);
-            data.forEach(youtubes => {
-                listHTML += "<li class='list-group-item'>"+
-                " | kind : " + youtube.kind + " | etag: " + youtubes.etag +  " | pageInfo: " + youtubes.pageInfo + " | totalResults: " + youtubes.totalResults + " | resultsPerPage: " + youtubes.resultsPerPage +  " </li>";
+            $.each(data, function (index, data) {
+                console.log(data);
             });
-            $("#lista-youtubes").html(listHTML);
+
         });
 
-       
+
     }
 
-    function sendPOSTRequest(body_object){
+    function sendPOSTRequest(body_object) {
         //Llamada post al backend usando jquery.
         //console.log("Objeto enviado por POST: " );
         //console.log(body_object);
-        
-        $.post("http://localhost:3000/youtubes", body_object , 
-        function(){
-            alert("youtubes guardado.");
-            //Actualizamos la lista html para ver los cambios.
-            getyoutubes();
-        });
+
+        $.post("http://localhost:3000/youtubes", body_object,
+            function () {
+                alert("youtubes guardado.");
+                //Actualizamos la lista html para ver los cambios.
+                getyoutubes();
+            });
     }
 </script>
 

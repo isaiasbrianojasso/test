@@ -15,13 +15,13 @@ var db = {
     },
 
     //Busqueda Alumno
-    getyoutubesBy: function (filter, value) {
-        console.log("filtro: " + filter + "valor: " + value);
+    getyoutubesBy: function (filter, kind) {
+        console.log("filtro: " + filter + "valor: " + kind);
         var selected = null;
         this.youtubes.forEach(youtubes => {
             console.log(youtubes);
             console.log(youtubes[filter]);
-            if (youtubes[filter] == value) {
+            if (youtubes[filter] == kind) {
                 selected = youtubes;
                 return selected;
             }
