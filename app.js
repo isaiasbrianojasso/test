@@ -10,22 +10,22 @@ var db = {
         var contents = fs.readFileSync("./youtubes.json");
         this.youtubes = JSON.parse(contents);
     },
-
+/*
     //Busqueda Alumno
-    getyoutubesBy: function (filter, kind) {
-        console.log("filtro: " + filter + "valor: " + kind);
+    getyoutubesBy: function (filter, forUsername) {
+        console.log("filtro: " + filter + "forUsername: " + forUsername);
         var selected = null;
         this.youtubes.forEach(youtubes => {
             console.log(youtubes);
             console.log(youtubes[filter]);
-            if (youtubes[filter] == kind) {
+            if (youtubes[filter] == forUsername) {
                 selected = youtubes;
                 return selected;
             }
         });
         return selected;
     },
-
+*/
     saveyoutubes : function(){
       archivos.writeFileSync('youtubes.json', JSON.stringify(this.youtube),
         function (error) {
@@ -51,10 +51,8 @@ app.get('/youtubes', (req, res) => {
   res.json(db.youtubes);
 });
 
-app.get('/youtubes/:kind', (req, res) => {
+app.get('/youtubes', (req, res) => {
   db.initDB();
-  var kind = req.params.kind;
-  var youtubes = db.getyoutubesBy('kind', kind);
   res.json(youtubes);
 });
 
@@ -65,6 +63,7 @@ app.post('/youtubes',function(req,res){
   console.log(youtubes);
   db.youtubes.push(youtubes);
   db.saveyoutubes();
+  alert("Recibido");
   res.json({'status' : 'OK'});
 });
 

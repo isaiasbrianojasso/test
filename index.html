@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -14,9 +14,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
-
 <body>
-    <!---------------------------FIN DE HEADER--------------------------->
+<!---------------------------FIN DE HEADER--------------------------->
     <header>
         <nav class="navbar nabvar-expand-md bg-dark navbar-dark">
             <a href="" class="navbar-brand">Tecnologias Informatica Examen</a>
@@ -43,17 +42,21 @@
                             <h3></h3>
                             <div class="card-body">
                                 <pre class="h2 card-title text-info" id="content"></pre>
-                                <button class="btn btn-primary form-control active" type="button" id="authorize-button"
-                                    style="display: none;">Autorizar</button>
-                                <button class="btn btn-danger form-control " type="button" id="signout-button"
-                                    style="display: none;">Desconectarse</button>
+                                <div class="col-8-md bg-danger mt-5 border ml-auto mb-auto rounded bt-4 ">
+                                    <div class="card-body" id="videos" name="videos"></div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-primary form-control" type="button" id="authorize-button"
+                                        style="display: none;">Autorizar</button>
+                                    <button class="btn btn-danger form-control mt-5" type="button" id="signout-button"
+                                        style="display: none;">Desconectarse</button>
+                                        <button class="btn btn-info form-control mt-5" type="button" id="saveJson" style="display: none;">Guardar Sesion</button>
+                                </div>
+
+
                             </div>
-                        </div>
-                        <div class="col-8-md bg-dark mt-5">
-                            <div id="videos" name="videos"></div>
-                        </div>
 
-
+                        </div>
 
                     </div>
 
@@ -63,11 +66,12 @@
                 CLIENT_ID = '414973337482-vbmp75623qbvdtps1tl4krqk1jak0afi.apps.googleusercontent.com';
                 apikey = 'AIzaSyBkDCtH8YSkqsXEgM9kMf-AHPHAy-Hj15o';
                 usernames = "radicalneoevo";
-
                 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
                 var SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
                 var authorizeButton = document.getElementById('authorize-button');
                 var signoutButton = document.getElementById('signout-button');
+                var saveJsonButton = document.getElementById('saveJson-button');
+
                 function handleClientLoad() {
                     gapi.load('client:auth2', initClient);
                 }
@@ -87,10 +91,12 @@
                     if (isSignedIn) {
                         authorizeButton.style.display = 'none';
                         signoutButton.style.display = 'block';
+                        saveJson.style.display = 'block';
                         getChannel();
                     } else {
-                        authorizeButton.style.display = 'block';
+                        saveJson.style.display = 'none';
                         signoutButton.style.display = 'none';
+                        authorizeButton.style.display = 'block';
                     }
                 }
                 function handleAuthClick(event) {
@@ -115,27 +121,17 @@
                         }
                         return Httpreq.responseText;
                     }
-
-
                     gapi.client.youtube.channels.list({
                         'part': 'snippet,contentDetails,statistics',
                         'forUsername': [usernames],
                     }).then(function (response) {
                         var channel = response.result.items[0];
-                        appendPre('Nombre : ' + channel.snippet.title + ' ' +
-                            'Sobrenombre:\'' + channel.snippet.customUrl);
-                        var temporal = channel.snippet.customUrl;
+                        appendPre('Bienvenido: ' + channel.snippet.title);
                         document.getElementById("imagen").innerHTML += "<div style='width:100%;min-height:90px;'>"
-                            + "<img class='border b-rounded mb-4' src='" + channel.snippet.thumbnails.medium.url + "' style='border:none;float:left;margin-right:10px;'/></a>"
+                            + "<img class='border b-rounded mb-4 img-rounded' src='" + channel.snippet.thumbnails.default.url + "' style='border:none;float:left;margin-right:10px;'/></a>"
                             + "</div>";
 
                         try {
-                            document.getElementById("videos").innerHTML += "<div style='width:100%;min-height:90px;'>"
-                                + "<a href='https://www.youtube.com/user/" + usernames + "' target='_blank'>"
-                                + "<img src='" + channel.snippet.thumbnails.default.url + "' style='border:none;float:left;margin-right:10px;' alt='" + channel.snippet.title + "' title='" + channel.snippet.title + "' /></a>"
-                                + "<div style='width:100%;text-align:center;'><h1><a href='https://www.youtube.com/user/" + usernames + "' target='_blank'>" + channel.snippet.title + "</a></h1>" + channel.snippet.description + "</div>"
-                                + "</div>";
-
                             var videoinfo = JSON.parse(getJSONData("https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId=" + channel.id + "&maxResults=25&key=" + apikey));
                             var videos = videoinfo.items;
                             var videocount = videoinfo.pageInfo.totalResults;
@@ -146,15 +142,18 @@
                                 var videodescription = videos[i].snippet.description;
                                 var videodate = videos[i].snippet.publishedAt; // date time published
                                 var videothumbnail = videos[i].snippet.thumbnails.default.url; // default, medium or high
-                                document.getElementById("videos").innerHTML += "<hr /><div style='width:100%;min-height:90px;'>"
-                                    + "<a href='https://www.youtube.com/watch?v=" + videoid + "' target='_blank'>"
+                                document.getElementById("videos").innerHTML += "<hr /><div style='width:200;min-height:200px; opacity:80%;'>"
+                                    + "<h3 class='text-white'>" + " Lista de Videos" + "</h3>" + "<a href='https://www.youtube.com/watch?v=" + videoid + "' target='_blank'>"
                                     + "<img src='" + videothumbnail + "' style='border:none;float:left;margin-right:10px;' alt='" + videotitle + "' title='" + videotitle + "' /></a>"
                                     + "<h3><a href='https://www.youtube.com/watch?v=" + videoid + "' target='_blank'>" + videotitle + "</a></h3>" + videodescription + ""
                                     + "</div>";
+                                    
                             }
+                            
                         } catch (ex) {
                             alert(ex.message);
                         }
+
 
 
 
@@ -180,10 +179,12 @@
 
     function getyoutubes() {
         $.get("http://localhost:3000/youtubes", function (data) {
-            var img = "";
             $.each(data, function (index, data) {
                 //https://content.googleapis.com/youtube/v3/channels?forUsername=radicalneoevo&part=snippet%2CcontentDetails%2Cstatistics
                 console.log(data);
+            
+            alert(data);
+             //sendPOSTRequest(JSON.parse(data));
             });
 
         });
