@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -48,11 +49,21 @@
                                     style="display: none;">Desconectarse</button>
                             </div>
                         </div>
+                        <div class="col-8-md bg-dark mt-5">
+                            <div id="videos" name="videos"></div>
+                        </div>
+
+
+
                     </div>
+
                 </div>
             </div>
             <script type="text/javascript">
-                var CLIENT_ID = '414973337482-vbmp75623qbvdtps1tl4krqk1jak0afi.apps.googleusercontent.com';
+                CLIENT_ID = '414973337482-vbmp75623qbvdtps1tl4krqk1jak0afi.apps.googleusercontent.com';
+                apikey = 'AIzaSyBkDCtH8YSkqsXEgM9kMf-AHPHAy-Hj15o';
+                usernames = "radicalneoevo";
+
                 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
                 var SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
                 var authorizeButton = document.getElementById('authorize-button');
@@ -94,7 +105,18 @@
                     pre.appendChild(textContent);
                 }
                 function getChannel() {
-                    var usernames = "radicalneoevo";
+                    function getJSONData(yourUrl) {
+                        var Httpreq = new XMLHttpRequest();
+                        try {
+                            Httpreq.open("GET", yourUrl, false);
+                            Httpreq.send(null);
+                        } catch (ex) {
+                            alert(ex.message);
+                        }
+                        return Httpreq.responseText;
+                    }
+
+
                     gapi.client.youtube.channels.list({
                         'part': 'snippet,contentDetails,statistics',
                         'forUsername': [usernames],
@@ -106,6 +128,36 @@
                         document.getElementById("imagen").innerHTML += "<div style='width:100%;min-height:90px;'>"
                             + "<img class='border b-rounded mb-4' src='" + channel.snippet.thumbnails.medium.url + "' style='border:none;float:left;margin-right:10px;'/></a>"
                             + "</div>";
+
+                        try {
+                            document.getElementById("videos").innerHTML += "<div style='width:100%;min-height:90px;'>"
+                                + "<a href='https://www.youtube.com/user/" + usernames + "' target='_blank'>"
+                                + "<img src='" + channel.snippet.thumbnails.default.url + "' style='border:none;float:left;margin-right:10px;' alt='" + channel.snippet.title + "' title='" + channel.snippet.title + "' /></a>"
+                                + "<div style='width:100%;text-align:center;'><h1><a href='https://www.youtube.com/user/" + usernames + "' target='_blank'>" + channel.snippet.title + "</a></h1>" + channel.snippet.description + "</div>"
+                                + "</div>";
+
+                            var videoinfo = JSON.parse(getJSONData("https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId=" + channel.id + "&maxResults=25&key=" + apikey));
+                            var videos = videoinfo.items;
+                            var videocount = videoinfo.pageInfo.totalResults;
+                            // video listing
+                            for (var i = 0; i < videos.length; i++) {
+                                var videoid = videos[i].id.videoId;
+                                var videotitle = videos[i].snippet.title;
+                                var videodescription = videos[i].snippet.description;
+                                var videodate = videos[i].snippet.publishedAt; // date time published
+                                var videothumbnail = videos[i].snippet.thumbnails.default.url; // default, medium or high
+                                document.getElementById("videos").innerHTML += "<hr /><div style='width:100%;min-height:90px;'>"
+                                    + "<a href='https://www.youtube.com/watch?v=" + videoid + "' target='_blank'>"
+                                    + "<img src='" + videothumbnail + "' style='border:none;float:left;margin-right:10px;' alt='" + videotitle + "' title='" + videotitle + "' /></a>"
+                                    + "<h3><a href='https://www.youtube.com/watch?v=" + videoid + "' target='_blank'>" + videotitle + "</a></h3>" + videodescription + ""
+                                    + "</div>";
+                            }
+                        } catch (ex) {
+                            alert(ex.message);
+                        }
+
+
+
                     });
                 }
             </script>
@@ -135,7 +187,6 @@
             });
 
         });
-
 
     }
 
