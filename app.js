@@ -8,7 +8,7 @@ var db = {
     initDB: function () {
         var fs = require("fs");
         var contents = fs.readFileSync("./youtubes.json");
-        this.youtubes = JSON.parse(contents);
+        this.usernames = JSON.parse(contents);
     },
 /*
     //Busqueda Alumno
@@ -27,7 +27,7 @@ var db = {
     },
 */
     saveyoutubes : function(){
-      archivos.writeFileSync('youtubes.json', JSON.stringify(this.youtube),
+      archivos.writeFileSync('youtubes.json', JSON.stringify(this.usernames),
         function (error) {
             if (error) {
                 console.log('Hubo un error al escribir en el archivo')
@@ -60,8 +60,8 @@ app.post('/youtubes',function(req,res){
   db.initDB();
   var youtubes = req.body;
   console.log("Objeto post recibido");
-  console.log(youtubes);
-  db.youtubes.push(youtubes);
+  //console.log(youtubes);
+  db.usernames.push(youtubes);
   db.saveyoutubes();
   alert("Recibido");
   res.json({'status' : 'OK'});

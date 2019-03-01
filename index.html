@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -14,8 +15,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
+
 <body>
-<!---------------------------FIN DE HEADER--------------------------->
+    <!---------------------------FIN DE HEADER--------------------------->
     <header>
         <nav class="navbar nabvar-expand-md bg-dark navbar-dark">
             <a href="" class="navbar-brand">Tecnologias Informatica Examen</a>
@@ -33,8 +35,8 @@
     <!---------------------------FIN DE HEADER--------------------------->
     <!---------------------------INICIO DE MAIN--------------------------->
     <main>
-        <div class="container">
-            <div class="row">
+        <div class="container-fluid">
+            <div class="row-fluid">
                 <div class="col-4-md mt-5 border bg-dark rounded ">
                     <div class="card-group rounded-5">
                         <div class="card-img-top img-circle ml-5 mt-5">
@@ -50,7 +52,8 @@
                                         style="display: none;">Autorizar</button>
                                     <button class="btn btn-danger form-control mt-5" type="button" id="signout-button"
                                         style="display: none;">Desconectarse</button>
-                                        <button class="btn btn-info form-control mt-5" type="button" id="saveJson" style="display: none;">Guardar Sesion</button>
+                                    <button class="btn btn-info form-control mt-5" type="button" id="saveJson"
+                                        style="display: none;">Guardar Sesion</button>
                                 </div>
 
 
@@ -147,9 +150,9 @@
                                     + "<img src='" + videothumbnail + "' style='border:none;float:left;margin-right:10px;' alt='" + videotitle + "' title='" + videotitle + "' /></a>"
                                     + "<h3><a href='https://www.youtube.com/watch?v=" + videoid + "' target='_blank'>" + videotitle + "</a></h3>" + videodescription + ""
                                     + "</div>";
-                                    
+
                             }
-                            
+
                         } catch (ex) {
                             alert(ex.message);
                         }
@@ -172,7 +175,19 @@
 </body>
 <script>
     $(document).ready(function () {
+
         getyoutubes();
+        $("#saveJson").on("click", function (event) {
+            $.get("http://localhost:3000/youtubes", function (data) {
+                alert("Json Guardado");
+                console.log(data);
+                $.foreach(data, function (index, data) {
+                    new Array(data);
+                    sendPOSTRequest(data);
+                });
+
+            });
+        });
     });
 
 
@@ -180,11 +195,8 @@
     function getyoutubes() {
         $.get("http://localhost:3000/youtubes", function (data) {
             $.each(data, function (index, data) {
-                //https://content.googleapis.com/youtube/v3/channels?forUsername=radicalneoevo&part=snippet%2CcontentDetails%2Cstatistics
+                data;
                 console.log(data);
-            
-            alert(data);
-             //sendPOSTRequest(JSON.parse(data));
             });
 
         });
@@ -195,7 +207,7 @@
         $.post("http://localhost:3000/youtubes", body_object,
             function () {
                 alert("youtubes guardado.");
-                getyoutubes();
+//                getyoutubes();
             });
     }
 </script>
