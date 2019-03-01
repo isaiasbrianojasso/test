@@ -49,52 +49,27 @@
                     </div>
                 </div>
             </div>
-
-
-            <script type="text/javascript">
-                // Client ID and API key from the Developer Console
+                <script type="text/javascript">
                 var CLIENT_ID = '414973337482-vbmp75623qbvdtps1tl4krqk1jak0afi.apps.googleusercontent.com';
-                // Array of API discovery doc URLs for APIs used by the quickstart
                 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
-
-                // Authorization scopes required by the API. If using multiple scopes,
-                // separated them with spaces.
                 var SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
-
                 var authorizeButton = document.getElementById('authorize-button');
                 var signoutButton = document.getElementById('signout-button');
-
-                /**
-                 *  On load, called to load the auth2 library and API client library.
-                 */
                 function handleClientLoad() {
                     gapi.load('client:auth2', initClient);
                 }
-
-                /**
-                 *  Initializes the API client library and sets up sign-in state
-                 *  listeners.
-                 */
                 function initClient() {
                     gapi.client.init({
                         discoveryDocs: DISCOVERY_DOCS,
                         clientId: CLIENT_ID,
                         scope: SCOPES
                     }).then(function () {
-                        // Listen for sign-in state changes.
                         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-                        // Handle the initial sign-in state.
                         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
                         authorizeButton.onclick = handleAuthClick;
                         signoutButton.onclick = handleSignoutClick;
                     });
                 }
-
-                /**
-                 *  Called when the signed in status changes, to update the UI
-                 *  appropriately. After a sign-in, the API is called.
-                 */
                 function updateSigninStatus(isSignedIn) {
                     if (isSignedIn) {
                         authorizeButton.style.display = 'none';
@@ -105,36 +80,17 @@
                         signoutButton.style.display = 'none';
                     }
                 }
-
-                /**
-                 *  Sign in the user upon button click.
-                 */
                 function handleAuthClick(event) {
                     gapi.auth2.getAuthInstance().signIn();
                 }
-
-                /**
-                 *  Sign out the user upon button click.
-                 */
                 function handleSignoutClick(event) {
                     gapi.auth2.getAuthInstance().signOut();
                 }
-
-                /**
-                 * Append text to a pre element in the body, adding the given message
-                 * to a text node in that element. Used to display info from API response.
-                 *
-                 * @param {string} message Text to be placed in pre element.
-                 */
                 function appendPre(message) {
                     var pre = document.getElementById('content');
                     var textContent = document.createTextNode(message + '\n');
                     pre.appendChild(textContent);
                 }
-
-                /**
-                 * Print files.
-                 */
                 function getChannel() {
                     gapi.client.youtube.channels.list({
                         'part': 'snippet,contentDetails,statistics',
@@ -147,7 +103,6 @@
                     });
                 }
             </script>
-
             <script async defer src="https://apis.google.com/js/api.js"
                 onload="this.onload=function(){};handleClientLoad()"
                 onreadystatechange="if (this.readyState === 'complete') this.onload()">
@@ -164,15 +119,11 @@
     });
 
     function getyoutubes() {
-        //LLamada GET para obtener los youtube
-        //Se muestra resultado con una lista en HTML
-        //Se utiliza un ciclo for y se genera el codigo HTML
-        //Usando Jquery se coloca el HTML en la lista.
         $.get("http://localhost:3000/youtubes", function (data) {
             var img = "";
-            console.log(data);
             $.each(data, function (index, data) {
-                console.log(data);
+                //https://content.googleapis.com/youtube/v3/channels?forUsername=radicalneoevo&part=snippet%2CcontentDetails%2Cstatistics
+                //console.log(data);
             });
 
         });
@@ -181,14 +132,9 @@
     }
 
     function sendPOSTRequest(body_object) {
-        //Llamada post al backend usando jquery.
-        //console.log("Objeto enviado por POST: " );
-        //console.log(body_object);
-
         $.post("http://localhost:3000/youtubes", body_object,
             function () {
                 alert("youtubes guardado.");
-                //Actualizamos la lista html para ver los cambios.
                 getyoutubes();
             });
     }
