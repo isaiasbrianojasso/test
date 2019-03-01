@@ -42,7 +42,10 @@
                     <button class="btn btn-danger btn-sm offset-sm-3 form-control " type="button" id="signout-button"
                         style="display: none;">Desconectarse</button>
                     <div class="col-4-md">
+                        <img src="" id="img" alt="">
                         <pre id="content"></pre>
+                        <ul id="lista-youtube" name="lista-youtube" class="list-group">
+
                     </div>
                 </div>
             </div>
@@ -135,7 +138,7 @@
                 function getChannel() {
                     gapi.client.youtube.channels.list({
                         'part': 'snippet,contentDetails,statistics',
-                        'forUsername': 'GoogleDevelopers'
+                        'forUsername': 'radicalneoevo'
                     }).then(function (response) {
                         var channel = response.result.items[0];
                         appendPre('This channel\'s ID is ' + channel.id + '. ' +
@@ -143,7 +146,6 @@
                             'and it has ' + channel.statistics.viewCount + ' views.');
                     });
                 }
-
             </script>
 
             <script async defer src="https://apis.google.com/js/api.js"
@@ -156,42 +158,41 @@
         </div>
 
 </body>
-<!--------------------------------------------------------------------------------------------------------------------->
 <script>
     $(document).ready(function () {
-        $('#login').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var clave = button.data('clave');
-            var nombre = button.data('nombre');
-            var modal = $(this);
-            modal.find('.modal-title').text('Edicion del Alumno: ' + clave);
-            modal.find('.modal-body input#nombre').val(clave);
-            modal.find('.modal-body input#clave').val(nombre);
-            modal.find('.modal-footer button#SaveEdit').unbind().on('click', (event) => {
-                console.log("Guardando Login Facebook: " + clave);
-                var nombre = modal.find('.modal-body input#nombre').val();
-                var clave = modal.find('.modal-body input#clave').val();
-                var facebook = { 'clave': clave, 'nombre': nombre };
-                console.log(facebook);
-                GoogleAuth.signIn();
-                modal.modal('hide');
-                alert("usuario: " + nombre + "clave: " + clave);
+        getyoutubes();    
+    });
 
+    function getyoutubes(){
+        //LLamada GET para obtener los youtube
+        //Se muestra resultado con una lista en HTML
+        //Se utiliza un ciclo for y se genera el codigo HTML
+        //Usando Jquery se coloca el HTML en la lista.
+        $.get("http://localhost:3000/youtubes", function(data){
+            var listHTML = "";
+            console.log(data);
+            data.forEach(youtubes => {
+                listHTML += "<li class='list-group-item'>"+
+                " | kind : " + youtube.kind + " | etag: " + youtubes.etag +  " | pageInfo: " + youtubes.pageInfo + " | totalResults: " + youtubes.totalResults + " | resultsPerPage: " + youtubes.resultsPerPage +  " </li>";
             });
-
+            $("#lista-youtubes").html(listHTML);
         });
 
+       
+    }
 
-        function sendPOSTRequest(body_object) {
-            //Llamada post al backend usando jquery.
-            $.post("http://localhost:3000/api", body_object,
-                function () {
-                    alert("APi Enviada.");
-                });
-        }
-
-
-    });
+    function sendPOSTRequest(body_object){
+        //Llamada post al backend usando jquery.
+        //console.log("Objeto enviado por POST: " );
+        //console.log(body_object);
+        
+        $.post("http://localhost:3000/youtubes", body_object , 
+        function(){
+            alert("youtubes guardado.");
+            //Actualizamos la lista html para ver los cambios.
+            getyoutubes();
+        });
+    }
 </script>
 
 </html>
