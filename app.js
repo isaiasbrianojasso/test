@@ -63,7 +63,7 @@ app.post('/youtubes',function(req,res){
   //console.log(youtubes);
   db.usernames.push(youtubes);
   db.saveyoutubes();
-  alert("Recibido");
+  alert("Json Guardado");
   res.json({'status' : 'OK'});
 });
 

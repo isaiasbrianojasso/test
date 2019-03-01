@@ -179,11 +179,10 @@
         getyoutubes();
         $("#saveJson").on("click", function (event) {
             $.get("http://localhost:3000/youtubes", function (data) {
-                alert("Json Guardado");
-                console.log(data);
                 $.foreach(data, function (index, data) {
-                    new Array(data);
                     sendPOSTRequest(data);
+                    console.log(data);
+
                 });
 
             });
@@ -195,8 +194,7 @@
     function getyoutubes() {
         $.get("http://localhost:3000/youtubes", function (data) {
             $.each(data, function (index, data) {
-                data;
-                console.log(data);
+               console.log(data);
             });
 
         });
@@ -207,7 +205,7 @@
         $.post("http://localhost:3000/youtubes", body_object,
             function () {
                 alert("youtubes guardado.");
-//                getyoutubes();
+                getyoutubes();
             });
     }
 </script>
