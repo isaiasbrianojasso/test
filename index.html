@@ -38,14 +38,15 @@
                 <div class="col-4-md mt-5 border bg-dark rounded ">
                     <div class="card-group rounded-5">
                         <div class="card-img-top img-circle ml-5 mt-5">
-                        <div class="card-img" id="imagen"></div>
-                        <div class="card-body">
+                            <div class="card-img" id="imagen"></div>
+                            <h3></h3>
+                            <div class="card-body">
                                 <pre class="h2 card-title text-info" id="content"></pre>
-                                <button class="btn btn-primary form-control active" type="button"
-                                    id="authorize-button" style="display: none;">Autorizar</button>
-                                <button class="btn btn-danger form-control " type="button"
-                                    id="signout-button" style="display: none;">Desconectarse</button>
-                        </div>
+                                <button class="btn btn-primary form-control active" type="button" id="authorize-button"
+                                    style="display: none;">Autorizar</button>
+                                <button class="btn btn-danger form-control " type="button" id="signout-button"
+                                    style="display: none;">Desconectarse</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -93,16 +94,17 @@
                     pre.appendChild(textContent);
                 }
                 function getChannel() {
+                    var usernames = "radicalneoevo";
                     gapi.client.youtube.channels.list({
                         'part': 'snippet,contentDetails,statistics',
-                        'forUsername': 'radicalneoevo'
+                        'forUsername': [usernames],
                     }).then(function (response) {
                         var channel = response.result.items[0];
-                        appendPre('Nombre : ' + channel.snippet.title + ' ' + 
+                        appendPre('Nombre : ' + channel.snippet.title + ' ' +
                             'Sobrenombre:\'' + channel.snippet.customUrl);
-
+                        var temporal = channel.snippet.customUrl;
                         document.getElementById("imagen").innerHTML += "<div style='width:100%;min-height:90px;'>"
-                            + "<img src='" + channel.snippet.thumbnails.default.url + "' style='border:none;float:left;margin-right:10px;'/></a>"
+                            + "<img class='border b-rounded mb-4' src='" + channel.snippet.thumbnails.medium.url + "' style='border:none;float:left;margin-right:10px;'/></a>"
                             + "</div>";
                     });
                 }
@@ -122,18 +124,6 @@
         getyoutubes();
     });
 
-    //obtengo el JSON
-    function getJSONData(yourUrl) {
-        var Httpreq = new XMLHttpRequest();
-        try {
-            Httpreq.open("GET", yourUrl, false);
-            Httpreq.send(null);
-        } catch (ex) {
-            alert(ex.message);
-        }
-        return Httpreq.responseText;
-    }
-
 
 
     function getyoutubes() {
@@ -142,9 +132,6 @@
             $.each(data, function (index, data) {
                 //https://content.googleapis.com/youtube/v3/channels?forUsername=radicalneoevo&part=snippet%2CcontentDetails%2Cstatistics
                 console.log(data);
-
-
-
             });
 
         });

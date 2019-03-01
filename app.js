@@ -1,10 +1,7 @@
 const express =  require("express");
 const bodyParser = require("body-parser");
 var app = express();
-
 const archivos = require('fs');
-
-
 //DB Handler
 var db = {
     //Indicar BD o abrir conexion
