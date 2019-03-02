@@ -16,10 +16,10 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="bg-dark">
     <!---------------------------FIN DE HEADER--------------------------->
     <header>
-        <nav class="navbar nabvar-expand-md bg-dark navbar-dark">
+        <nav class="navbar nabvar-expand-md bg-dark navbar-dark border b-rounded">
             <a href="" class="navbar-brand">Tecnologias Informatica Examen</a>
             <button data-target="#menu" data-toggle="collapse" class="navbar-toggler" type="button">
                 <span class="navbar-toggler-icon"></span>
@@ -35,7 +35,7 @@
     <!---------------------------FIN DE HEADER--------------------------->
     <!---------------------------INICIO DE MAIN--------------------------->
     <main>
-        <div class="container-fluid">
+        <div class="container-fluid bg-dark">
             <div class="row-fluid">
                 <div class="col-4-md mt-5 border bg-dark rounded ">
                     <div class="card-group rounded-5">
@@ -179,6 +179,7 @@
         getyoutubes();
         $("#saveJson").on("click", function (event) {
             $.get("http://localhost:3000/youtubes", function (data) {
+                alert("Json Guardado");
                 $.foreach(data, function (index, data) {
                     sendPOSTRequest(data);
                     console.log(data);
@@ -194,7 +195,7 @@
     function getyoutubes() {
         $.get("http://localhost:3000/youtubes", function (data) {
             $.each(data, function (index, data) {
-               console.log(data);
+                console.log(data);
             });
 
         });
